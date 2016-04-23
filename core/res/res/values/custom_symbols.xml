@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/* Copyright (c) 2013, The Linux Foundation. All rights reserved.
+** Not a Contribution.
+**
+** Copyright 2012, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources>
+  <!-- omni additions -->
+
+  <!-- Power menu reboot -->
+  <java-symbol name="ic_lock_power_reboot" type="drawable" />
+  <java-symbol name="global_action_reboot" type="string" />
+  <java-symbol name="global_action_reboot_sub" type="string" />
+  <java-symbol name="global_action_reboot_more" type="string" />
+  <java-symbol name="global_action_reboot_recovery" type="string" />
+  <java-symbol name="global_action_reboot_bootloader" type="string" />
+  <java-symbol type="array" name="config_rebootActionsList" />
+  <java-symbol type="array" name="values_globalActionsList" />
+  <java-symbol name="reboot_to_bootloader_title" type="string" />
+  <java-symbol name="reboot_to_bootloader_message" type="string" />
+  <java-symbol name="reboot_to_recovery_title" type="string" />
+  <java-symbol name="reboot_to_recovery_message" type="string" />
+  <java-symbol name="reboot_system_title" type="string" />
+  <java-symbol name="reboot_system_message" type="string" />
+  <java-symbol type="drawable" name="ic_global_airplane_mode" />
+  <java-symbol type="drawable" name="ic_global_airplane_mode_off" />
+  <java-symbol type="drawable" name="ic_global_power_off" />
+  <java-symbol name="ic_global_power_rebootbootloader" type="drawable" />
+  <java-symbol name="ic_global_power_rebootrecovery" type="drawable" />
+  <java-symbol name="ic_global_power_reboot" type="drawable" />
+  <java-symbol type="drawable" name="ic_global_audio_ring_notif" />
+  <java-symbol type="drawable" name="ic_global_audio_ring_notif_mute" />
+  <java-symbol type="drawable" name="ic_global_audio_ring_notif_vibrate" />
+  <java-symbol type="drawable" name="ic_global_lock" />
+  <java-symbol type="drawable" name="ic_global_settings" />
+  <java-symbol type="drawable" name="ic_global_voice_search" />
+  <java-symbol type="drawable" name="ic_global_dnd_off" />
+  <java-symbol type="drawable" name="ic_global_dnd_total_silence" />
+  <java-symbol type="drawable" name="ic_global_dnd_alarms" />
+  <java-symbol type="drawable" name="ic_global_dnd_important" />
+  <java-symbol type="drawable" name="ic_global_users" />
+  <java-symbol type="id" name="option4" />
+  <java-symbol type="layout" name="global_actions_dnd_mode" />
+  <java-symbol type="style" name="GlobalActionsAnimation" />
+  <java-symbol type="string" name="global_action_users" />
+  <java-symbol type="dimen" name="global_actions_avatar_size" />
+  <java-symbol type="color" name="global_actions_icon_color" />
+  <java-symbol type="drawable" name="ic_global_screenshot" />
+  <java-symbol type="string" name="global_action_screenshot" />
+  <java-symbol type="drawable" name="ic_global_screenrecord" />
+  <java-symbol type="string" name="global_action_screenrecord" />
+  <java-symbol type="drawable" name="ic_global_torch_on" />
+  <java-symbol type="drawable" name="ic_global_torch_off" />
+  <java-symbol type="string" name="global_action_torch_on" />
+  <java-symbol type="string" name="global_action_torch_off" />
+  <java-symbol type="string" name="global_actions_toggle_torch_mode" />
+
+   <!-- HW button mapping -->
+  <java-symbol type="integer" name="config_deviceHardwareKeys" />
+  <java-symbol type="integer" name="config_backKillTimeout" />
+  <java-symbol type="string" name="app_killed_message" />
+  <java-symbol type="bool" name="config_hasRemovableLid" />
+  <java-symbol type="bool" name="config_persistHomeWakeSupport" />
+
+  <!-- power profiles -->
+  <java-symbol type="bool" name="config_powerProfilesSupported" />
+
+  <java-symbol type="bool" name="config_dozeUseAccelerometer" />
+
+  <!-- Samsung STK -->
+  <java-symbol type="bool" name="config_samsung_stk" />
+
+  <!-- Last app switch animations -->
+  <java-symbol type="anim" name="last_app_in" />
+  <java-symbol type="anim" name="last_app_out" />
+
+  <!--OmniGears Battery lights -->
+  <java-symbol type="bool" name="config_multiColorBatteryLed" />
+  <java-symbol type="bool" name="config_intrusiveBatteryLed" />
+
+  <java-symbol type="array" name="entries_battery_styles" />
+  <java-symbol type="array" name="values_battery_styles" />
+  <java-symbol type="bool" name="config_button_brightness_support" />
+  <java-symbol type="integer" name="config_button_brightness_default" />
+  <java-symbol type="integer" name="config_longPressOnMenuBehavior" />
+  <java-symbol type="string" name="lock_to_app_toast_back" />
+  <java-symbol type="string" name="system_error_vendorprint" />
+  <java-symbol type="drawable" name="ic_audio_notification_new" />
+  <java-symbol type="drawable" name="ic_audio_notification_mute_new" />
+  <java-symbol type="drawable" name="ic_audio_notification_mute_alpha" />
+  <java-symbol type="bool" name="config_enableScreenrecordChord" />
+
+  <!-- lock clock -->
+  <java-symbol type="dimen" name="lock_clock_date_font_size" />
+  <java-symbol type="dimen" name="lock_clock_time_font_size" />
+</resources>
