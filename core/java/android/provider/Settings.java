@@ -3524,6 +3524,12 @@ public final class Settings {
          */
         public static final String VOLUME_PANEL_EXPANDED = "volume_link_expanded";
 
+        /** 
+         * Whether to allow one finger quick settings expansion on the right side of the statusbar.
+         * @hide
+         */
+        public static final String STATUS_BAR_QUICK_QS_PULLDOWN = "status_bar_quick_qs_pulldown";
+
         /**
          * Int value of the battery style 0 is default
          *
@@ -4940,6 +4946,12 @@ public final class Settings {
          */
         @Deprecated
         public static final String ADB_ENABLED = Global.ADB_ENABLED;
+
+        /**
+         * The hostname for this device
+         * @hide
+         */
+        public static final String DEVICE_HOSTNAME = "device_hostname";
 
         /**
          * Setting to allow mock locations and location provider status to be injected into the
