@@ -62,4 +62,7 @@
 
     <!-- NFC QS tile -->
     <string name="quick_settings_nfc_label">NFC</string>
+
+    <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Sound</string>
 </resources>
