@@ -266,6 +266,7 @@ public class QsTuner extends PreferenceFragment implements Callback {
         else if (spec.equals("hotspot")) return R.string.quick_settings_hotspot_label;
         else if (spec.equals("nfc")) return R.string.quick_settings_nfc_label;
         else if (spec.equals("sound")) return R.string.quick_settings_sound_label;
+        else if (spec.equals("sync")) return R.string.quick_settings_sync_label;
         return 0;
     }
 
@@ -493,6 +494,7 @@ public class QsTuner extends PreferenceFragment implements Callback {
             else if (mSpec.equals("hotspot")) return R.drawable.ic_hotspot_disable;
             else if (mSpec.equals("nfc")) return R.drawable.ic_qs_nfc_on;
             else if (mSpec.equals("sound")) return R.drawable.ic_qs_ringer_audible;
+            else if (mSpec.equals("sync")) return R.drawable.ic_qs_sync_on;
             return R.drawable.android;
         }
 
