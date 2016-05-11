@@ -269,6 +269,7 @@ public class QsTuner extends PreferenceFragment implements Callback {
         else if (spec.equals("sync")) return R.string.quick_settings_sync_label;
         else if (spec.equals("adb_network")) return R.string.quick_settings_adb_network;
         else if (spec.equals("reboot")) return R.string.quick_settings_reboot_label;
+        else if (spec.equals("screenoff")) return R.string.quick_settings_screen_off;
         return 0;
     }
 
@@ -499,6 +500,7 @@ public class QsTuner extends PreferenceFragment implements Callback {
             else if (mSpec.equals("sync")) return R.drawable.ic_qs_sync_on;
             else if (mSpec.equals("adb_network")) return R.drawable.ic_qs_network_adb_on;
             else if (mSpec.equals("reboot")) return R.drawable.ic_qs_reboot;
+            else if (mSpec.equals("screenoff")) return R.drawable.ic_qs_power;
             return R.drawable.android;
         }
 
