@@ -55,7 +55,7 @@ public abstract class WindowOrientationListener {
     private boolean mEnabled;
     private int mRate;
     private String mSensorType;
-
+    private boolean mUseSystemClockforRotationSensor;
     private Sensor mSensor;
     private OrientationJudge mOrientationJudge;
     private int mCurrentRotation = -1;
@@ -603,7 +603,7 @@ public abstract class WindowOrientationListener {
                 // or when we see values of (0, 0, 0) which indicates that we polled the
                 // accelerometer too soon after turning it on and we don't have any data yet.
                 final long now = mUseSystemClockforRotationSensor
- +                        ? SystemClock.elapsedRealtimeNanos() : event.timestamp;
+                        ? SystemClock.elapsedRealtimeNanos() : event.timestamp;
                 final long then = mLastFilteredTimestampNanos;
                 final float timeDeltaMS = (now - then) * 0.000001f;
                 final boolean skipSample;
