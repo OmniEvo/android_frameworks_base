@@ -1,6 +1,4 @@
 /*
- * Copyright (C) 2015 NXP Semiconductors
- * The original Work has been changed by NXP Semiconductors.
  * Copyright (C) 2010 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -175,10 +173,6 @@ public final class MifareClassic extends BasicTagTechnology {
             mType = TYPE_CLASSIC;
             mSize = SIZE_4K;
             break;
-        case 0x19:
-            mType = TYPE_CLASSIC;
-            mSize = SIZE_2K;
-            break;            
         case 0x28:
             mType = TYPE_CLASSIC;
             mSize = SIZE_1K;
