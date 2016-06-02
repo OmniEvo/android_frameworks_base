@@ -98,4 +98,9 @@
     <string name="accessibility_quick_settings_compass_changed_off">Compass turned off.</string>
     <!-- Announcement made when compass changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_compass_changed_on">Compass turned on.</string>
+    
+    <!-- Caffeine QS Tile -->
+    <string name="quick_settings_caffeine_label">Caffeine</string>
+    <string name="accessibility_quick_settings_caffeine_off">Caffeine off.</string>
+    <string name="accessibility_quick_settings_caffeine_on">Caffeine on.</string>    
 </resources>

@@ -271,6 +271,7 @@ public class QsTuner extends PreferenceFragment implements Callback {
         else if (spec.equals("reboot")) return R.string.quick_settings_reboot_label;
         else if (spec.equals("screenoff")) return R.string.quick_settings_screen_off;
         else if (spec.equals("compass")) return R.string.quick_settings_compass_label;
+        else if (spec.equals("caffeine")) return R.string.quick_settings_caffeine_label;        
         return 0;
     }
 
@@ -504,6 +505,7 @@ public class QsTuner extends PreferenceFragment implements Callback {
             else if (mSpec.equals("reboot")) return R.drawable.ic_qs_reboot;
             else if (mSpec.equals("screenoff")) return R.drawable.ic_qs_power;
             else if (mSpec.equals("compass")) return R.drawable.ic_qs_compass_on;
+            else if (mSpec.equals("caffeine")) return R.drawable.ic_qs_caffeine_on;            
             return R.drawable.android;
         }
 
