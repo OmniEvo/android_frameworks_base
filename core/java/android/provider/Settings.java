@@ -3531,8 +3531,14 @@ public final class Settings {
         public static final String STATUS_BAR_QUICK_QS_PULLDOWN = "status_bar_quick_qs_pulldown";
 
         /**
-         * Int value of the battery style 0 is default
-         *
+         *         
+         * Three Finger Gesture from Oppo
+         * @hide
+         */
+        public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
+ 
+        /**
+         * Int value of the battery style 0 is default                    
          * @hide
          */
         public static final String STATUSBAR_BATTERY_STYLE = "statusbar_battery_style";
