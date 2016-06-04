@@ -460,6 +460,12 @@
                 <action android:name="org.omnirom.DaylightHeaderPack" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
+        </activity>	
+
+        <service
+            android:name=".screenshot.ScreenshotEditor"
+            android:enabled="true"
+            android:exported="true" />	
+	
     </application>
 </manifest>
