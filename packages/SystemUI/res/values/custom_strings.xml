@@ -102,5 +102,8 @@
     <!-- Caffeine QS Tile -->
     <string name="quick_settings_caffeine_label">Caffeine</string>
     <string name="accessibility_quick_settings_caffeine_off">Caffeine off.</string>
-    <string name="accessibility_quick_settings_caffeine_on">Caffeine on.</string>    
+    <string name="accessibility_quick_settings_caffeine_on">Caffeine on.</string>
+
+    <!-- Brightness slider -->
+    <string name="qs_brightness_slider_title">Brightness slider</string>    
 </resources>
