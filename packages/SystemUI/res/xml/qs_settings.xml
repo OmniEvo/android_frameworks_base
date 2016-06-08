@@ -37,4 +37,9 @@
         android:title="@string/qs_tile_bg_opacity_title"
         android:defaultValue="255"
         android:persistent="false" />
+
+    <com.android.systemui.tuner.SecureSettingSwitchPreference
+        android:key="qs_show_brightness_slider"
+        android:title="@string/qs_brightness_slider_title"
+        android:defaultValue="true"/>
 </PreferenceScreen>
