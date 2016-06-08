@@ -193,6 +193,7 @@ public class NotificationPanelView extends PanelView implements
     private boolean mLastAnnouncementWasQuickSettings;
     private boolean mQsTouchAboveFalsingThreshold;
     private int mQsFalsingThreshold;
+    private int mQsSmartPullDown;
 
     private float mKeyguardStatusBarAnimateAlpha = 1f;
     private int mOldLayoutDirection;
@@ -813,7 +814,31 @@ public class NotificationPanelView extends PanelView implements
                 && (event.isButtonPressed(MotionEvent.BUTTON_SECONDARY)
                         || event.isButtonPressed(MotionEvent.BUTTON_TERTIARY));
 
-        return twoFingerDrag || stylusButtonClickDrag || mouseButtonClickDrag;
+        final float w = getMeasuredWidth();
+        final float x = event.getX();
+        float region = (w * (1.f/4.f)); // TODO overlay region fraction?
+        boolean showQsOverride = false;
+
+        switch (mOneFingerQuickSettingsIntercept) {
+            case 1: // Right side pulldown
+                showQsOverride = isLayoutRtl() ? (x < region) : (w - region < x);
+                break;
+            case 2: // Left side pulldown
+                showQsOverride = isLayoutRtl() ? (w - region < x) : (x < region);
+                break;
+            case 3: // pull down anywhere
+                showQsOverride = true;
+                break;
+        }
+        showQsOverride &= mStatusBarState == StatusBarState.SHADE;
+
+        if (mQsSmartPullDown == 1 && !mStatusBar.hasActiveClearableNotifications()
+                || mQsSmartPullDown == 2 && !mStatusBar.hasActiveOngoingNotifications()
+                || mQsSmartPullDown == 3 && !mStatusBar.hasActiveVisibleNotifications()) {
+                showQsOverride = true;
+        }
+
+        return twoFingerDrag || showQsOverride || stylusButtonClickDrag || mouseButtonClickDrag;
     }
 
     private void handleQsDown(MotionEvent event) {
@@ -2479,6 +2504,44 @@ public class NotificationPanelView extends PanelView implements
         return !tasks.isEmpty() && pkgName.equals(tasks.get(0).topActivity.getPackageName());
     }
 
+	class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_SMART_PULLDOWN), false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        void unobserve() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            update();
+        }
+
+        public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+            mOneFingerQuickSettingsIntercept = Settings.System.getIntForUser(
+                    resolver, Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 1,
+                    UserHandle.USER_CURRENT);
+            mQsSmartPullDown = Settings.System.getIntForUser(resolver,
+                    Settings.System.QS_SMART_PULLDOWN, 0, UserHandle.USER_CURRENT);
+        }
+    }
     private void setQSBackgroundAlpha(int alpha) {
         if (mQsContainer != null) {
             mQsContainer.getBackground().setAlpha(alpha);

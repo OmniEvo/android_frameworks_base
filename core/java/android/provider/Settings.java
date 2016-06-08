@@ -3802,6 +3802,12 @@ public final class Settings {
         public static final String STATUS_BAR_NETWORK_ACTIVITY = "status_bar_network_activity";
 
         /**
+         * Quick Settings Smart Pulldown
+         * @hide
+         */
+        public static final String QS_SMART_PULLDOWN = "qs_smart_pulldown";
+
+        /**
          * Whether to display recents in full screen
          * @hide
          */
