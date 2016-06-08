@@ -23,13 +23,17 @@ import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.app.ActivityManager;
 import android.app.StatusBarManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.net.Uri;
+import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
@@ -222,6 +226,11 @@ public class NotificationPanelView extends PanelView implements
     /** Interpolator to be used for animations that respond directly to a touch */
     private final Interpolator mTouchResponseInterpolator =
             new PathInterpolator(0.3f, 0f, 0.1f, 1f);
+
+    private Handler mHandler = new Handler();
+    private SettingsObserver mSettingsObserver;
+
+    private int mOneFingerQuickSettingsIntercept;
 
     public NotificationPanelView(Context context, AttributeSet attrs) {
         super(context, attrs);
