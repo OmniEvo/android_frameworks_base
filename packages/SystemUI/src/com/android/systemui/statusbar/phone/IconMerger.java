@@ -23,18 +23,21 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.android.systemui.R;
+import com.android.systemui.statusbar.policy.Clock;
 
 public class IconMerger extends LinearLayout {
     private static final String TAG = "IconMerger";
     private static final boolean DEBUG = false;
 
-    private int mIconSize;
+    private int mIconWidth;
+    private int mClockAndDateWidth;
+    private boolean mCenterClock;
     private View mMoreView;
 
     public IconMerger(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mIconSize = context.getResources().getDimensionPixelSize(
+        mIconWidth = context.getResources().getDimensionPixelSize(
                 R.dimen.status_bar_icon_size);
 
         if (DEBUG) {
@@ -53,7 +56,18 @@ public class IconMerger extends LinearLayout {
         int width = getMeasuredWidth();
         final ViewGroup parent = (ViewGroup)getParent();
         View label = parent.findViewById(R.id.statusbar_carrier_text);
-        setMeasuredDimension(width - (width % mIconSize), getMeasuredHeight());
+
+        if (mCenterClock) {
+            final int totalWidth = mContext.getResources().getDisplayMetrics().widthPixels;
+            int usableWidth = (totalWidth - mClockAndDateWidth - 2 * mIconWidth) / 2;
+            if (label.getVisibility() != View.GONE) {
+                usableWidth -= label.getWidth();
+            }
+            if (width > usableWidth) {
+                width = usableWidth;
+            }
+        }
+        setMeasuredDimension(width - (width % mIconWidth), getMeasuredHeight());
     }
 
     @Override
@@ -72,8 +86,8 @@ public class IconMerger extends LinearLayout {
         }
         final boolean overflowShown = (mMoreView.getVisibility() == View.VISIBLE);
         // let's assume we have one more slot if the more icon is already showing
-        if (overflowShown) visibleChildren --;
-        final boolean moreRequired = visibleChildren * mIconSize > width;
+        if (!mCenterClock && overflowShown) visibleChildren --;
+        final boolean moreRequired = visibleChildren * mIconWidth > width;
         if (moreRequired != overflowShown) {
             post(new Runnable() {
                 @Override
@@ -82,5 +96,10 @@ public class IconMerger extends LinearLayout {
                 }
             });
         }
+    }
+
+    public void setClockAndDateStatus(int width, int mode, boolean enabled) {
+        mClockAndDateWidth = width;
+        mCenterClock = mode == Clock.STYLE_CLOCK_CENTER && enabled;
     }
 }
