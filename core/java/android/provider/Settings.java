@@ -6571,6 +6571,13 @@ public final class Settings {
                 "camera_double_tap_power_gesture_disabled";
 
         /**
+         * Disable expanding quick settings on secure lock screens
+         *
+         * @hide
+         */
+        public static final String LOCKSCREEN_QS_DISABLED = "lockscreen_qs_disabled";
+
+        /**
          * Whether to show the brightness slider in quick settings panel.
          * @hide
          */
