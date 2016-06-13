@@ -551,6 +551,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mContext.getContentResolver().registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.LOCKSCREEN_QS_DISABLED),
                     false, this, UserHandle.USER_ALL);
+            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN),
+                    false, this, UserHandle.USER_ALL);
+            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_SMART_PULLDOWN),
+                    false, this, UserHandle.USER_ALL);
+
             update();
         }
 

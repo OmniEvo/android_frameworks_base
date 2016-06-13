@@ -220,6 +220,7 @@ public class NotificationPanelView extends PanelView implements
     // Omni additions
     private boolean mLockScreenQsDisabled;
     private LockPatternUtils mLockPatternUtils;
+    private int mOneFingerQuickSettingsIntercept;
 
     private Runnable mHeadsUpExistenceChangedRunnable = new Runnable() {
         @Override
@@ -234,9 +235,6 @@ public class NotificationPanelView extends PanelView implements
             new PathInterpolator(0.3f, 0f, 0.1f, 1f);
 
     private Handler mHandler = new Handler();
-    private SettingsObserver mSettingsObserver;
-
-    private int mOneFingerQuickSettingsIntercept;
 
     public NotificationPanelView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -1518,6 +1516,7 @@ public class NotificationPanelView extends PanelView implements
         View header = mKeyguardShowing ? mKeyguardStatusBar : mHeader;
         boolean onHeader = x >= header.getX() && x <= header.getX() + header.getWidth()
                 && y >= header.getTop() && y <= header.getBottom();
+
         if (mQsExpanded) {
             return onHeader || (mScrollView.isScrolledToBottom() && yDiff < 0) && isInQsArea(x, y);
         } else {
@@ -2520,44 +2519,6 @@ public class NotificationPanelView extends PanelView implements
         return !tasks.isEmpty() && pkgName.equals(tasks.get(0).topActivity.getPackageName());
     }
 
-	class SettingsObserver extends ContentObserver {
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN), false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_SMART_PULLDOWN), false, this, UserHandle.USER_ALL);
-            update();
-        }
-
-        void unobserve() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.unregisterContentObserver(this);
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            update();
-        }
-
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            update();
-        }
-
-        public void update() {
-            ContentResolver resolver = mContext.getContentResolver();
-            mOneFingerQuickSettingsIntercept = Settings.System.getIntForUser(
-                    resolver, Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 1,
-                    UserHandle.USER_CURRENT);
-            mQsSmartPullDown = Settings.System.getIntForUser(resolver,
-                    Settings.System.QS_SMART_PULLDOWN, 0, UserHandle.USER_CURRENT);
-        }
-    }
     private void setQSBackgroundAlpha(int alpha) {
         if (mQsContainer != null) {
             mQsContainer.getBackground().setAlpha(alpha);
@@ -2580,5 +2541,13 @@ public class NotificationPanelView extends PanelView implements
         mLockScreenQsDisabled = Settings.Secure.getIntForUser(
                 mContext.getContentResolver(), Settings.Secure.LOCKSCREEN_QS_DISABLED, 0,
                 UserHandle.USER_CURRENT) != 0;
+
+        mOneFingerQuickSettingsIntercept = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 0,
+                UserHandle.USER_CURRENT);
+
+        mQsSmartPullDown = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.QS_SMART_PULLDOWN, 0,
+                UserHandle.USER_CURRENT);
     }
 }
