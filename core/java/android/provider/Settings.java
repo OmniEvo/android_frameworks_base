@@ -4016,6 +4016,13 @@ public final class Settings {
          */
         public static final String NAVIGATION_BAR_IME_BUTTON = "navigation_bar_ime_button";
 
+        /** some devices have a extra hw button e.g. n3 on the back on the 
+         * fingerprint sensor. allow mapping button to key
+         *
+         * @hide
+         */
+        public static final String BUTTON_EXTRA_KEY_MAPPING = "button_extra_mapping";
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
