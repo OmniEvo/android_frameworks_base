@@ -21,6 +21,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.app.Activity;
 import android.app.Notification;
 import android.app.Notification.BigPictureStyle;
 import android.app.NotificationManager;
@@ -42,6 +43,7 @@ import android.graphics.PointF;
 import android.media.MediaActionSound;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Process;
 import android.provider.MediaStore;
@@ -119,9 +121,9 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
     // for now, we just add and remove a space from the ticker text to trigger the animation when
     // necessary.
     private static boolean mTickerAddSpace;
-    
+
     private boolean mIsScreenshotCropShareEnabled;
-    
+
     SaveImageInBackgroundTask(Context context, SaveImageInBackgroundData data,
             NotificationManager nManager, int nId) {
         Resources r = context.getResources();
@@ -135,7 +137,7 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
                 Environment.DIRECTORY_PICTURES), SCREENSHOTS_DIR_NAME);
         mImageFilePath = new File(mScreenshotDir, mImageFileName).getAbsolutePath();
         mIsScreenshotCropShareEnabled = Settings.System.getInt(context.getContentResolver(), Settings.System.SCREENSHOT_CROP_AND_SHARE, 0) != 0;
-        
+
         // Create the large notification icon
         mImageWidth = data.image.getWidth();
         mImageHeight = data.image.getHeight();
@@ -179,7 +181,7 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
 
             mNotificationBuilder = new Notification.Builder(context)
                 .setTicker(r.getString(R.string.screenshot_saving_ticker)
-                        + (mTickerAddSpace ? " " : ""))                     
+                        + (mTickerAddSpace ? " " : ""))
                 .setContentTitle(r.getString(R.string.screenshot_saving_title))
                 .setContentText(r.getString(R.string.screenshot_saving_text))
                 .setSmallIcon(R.drawable.stat_notify_image)
@@ -277,7 +279,7 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
                         new Intent(context, GlobalScreenshot.TargetChosenReceiver.class)
                                 .putExtra(GlobalScreenshot.CANCEL_ID, mNotificationId),
                         PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_ONE_SHOT);
-                Intent chooserIntent = Intent.createChooser(sharingIntent, null,
+                final Intent chooserIntent = Intent.createChooser(sharingIntent, null,
                         callback.getIntentSender());
                 chooserIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
                         | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -285,6 +287,17 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
                         r.getString(com.android.internal.R.string.share),
                         PendingIntent.getActivity(context, 0, chooserIntent,
                                 PendingIntent.FLAG_CANCEL_CURRENT));
+
+                // Create an edit action for the notification
+                final Intent editIntent = new Intent(context, GlobalScreenshot.EditScreenshotActivity.class);
+                editIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        | Intent.FLAG_ACTIVITY_NEW_TASK);
+                final PendingIntent editAction = PendingIntent.getActivity(context,  0,
+                        editIntent.putExtra(GlobalScreenshot.CANCEL_ID, mNotificationId)
+                                .putExtra(GlobalScreenshot.SCREENSHOT_FILE_PATH, mImageFilePath),
+                        PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_ONE_SHOT);
+                mNotificationBuilder.addAction(R.drawable.ic_image_edit,
+                        r.getString(R.string.action_edit), editAction);
 
                 // Create a delete action for the notification
                 final PendingIntent deleteAction = PendingIntent.getBroadcast(context,  0,
@@ -294,7 +307,7 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
                         PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_ONE_SHOT);
                 mNotificationBuilder.addAction(R.drawable.ic_screenshot_delete,
                         r.getString(com.android.internal.R.string.delete), deleteAction);
-            }            
+            }
             params[0].imageUri = uri;
             params[0].image = null;
             params[0].result = 0;
@@ -847,6 +860,28 @@ class GlobalScreenshot {
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             final int id = intent.getIntExtra(CANCEL_ID, 0);
             final Uri uri = Uri.parse(intent.getStringExtra(SCREENSHOT_URI_ID));
+            nm.cancel(id);
+
+            // And delete the image from the media store
+            new DeleteImageInBackgroundTask(context).execute(uri);
+        }
+    }
+
+    // must be an activity to close the notification drawer
+    public static class EditScreenshotActivity extends Activity {
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            final Intent intent = getIntent();
+            if (!intent.hasExtra(CANCEL_ID) || !intent.hasExtra(SCREENSHOT_FILE_PATH)) {
+                return;
+            }
+
+            // Clear the notification
+            final NotificationManager nm =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            final int id = intent.getIntExtra(CANCEL_ID, 0);
+            final String imageFilePath = intent.getStringExtra(SCREENSHOT_FILE_PATH);
             nm.cancel(id);
 
             Intent startIntent = new Intent(this, com.android.systemui.screenshot.ScreenshotEditor.class);
