@@ -104,5 +104,10 @@
     <string name="action_delete_fault">Deleting was unsuccessful</string>
     <string name="action_save_success">Saved</string>
     <string name="action_save_fault">Saving was unsuccessful</string>
-    <string name="action_edit">Edit</string>    
+    <string name="action_edit">Edit</string>
+
+    <!-- Music QS Tile -->
+    <string name="quick_settings_music_label">Music</string>
+    <string name="quick_settings_music_play">Play</string>
+    <string name="quick_settings_music_pause">Pause</string>    
 </resources>
