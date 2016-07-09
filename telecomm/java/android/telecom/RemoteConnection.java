@@ -141,14 +141,7 @@ public final class RemoteConnection {
         /**
          * Indicates that the caller display name of this {@code RemoteConnection} has changed.
          * See {@link #getCallerDisplayName()} and {@link #getCallerDisplayNamePresentation()}.
-         *        /**
- +         * Handles a connection event propagated to this {@link RemoteConnection}.
- +         *
- +         * @param connection The {@code RemoteConnection} invoking this method.
- +         * @param event The connection event.
- +         * @hide
- +         */
- +        public void onConnectionEvent(RemoteConnection connection, String event) {}
+         *
          * @param connection The {@code RemoteConnection} invoking this method.
          * @param callerDisplayName The new caller display name of the {@code RemoteConnection}.
          * @param presentation The presentation requirements for the handle.
