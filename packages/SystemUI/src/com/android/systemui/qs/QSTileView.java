@@ -147,13 +147,8 @@ public class QSTileView extends ViewGroup {
             mDualLabel.setBackgroundResource(R.drawable.btn_borderless_rect);
             mDualLabel.setFirstLineCaret(mContext.getDrawable(R.drawable.qs_dual_tile_caret));
             mDualLabel.setTextColor(mContext.getColor(R.color.qs_tile_text));
-<<<<<<< HEAD
-            mDualLabel.setPadding(0,mDualTileVerticalPaddingPx, 0, mDualTileVerticalPaddingPx);
-            mDualLabel.setTypeface(CONDENSED);
-=======
             mDualLabel.setPadding(0, mDualTileVerticalPaddingPx, 0, mDualTileVerticalPaddingPx);
             mDualLabel.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
->>>>>>> d9e1fa9... OMS: Fix Quick settings tiles font themes derp [6/6]
             mDualLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                     res.getDimensionPixelSize(R.dimen.qs_tile_text_size));
             mDualLabel.setClickable(true);
